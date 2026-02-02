@@ -1,0 +1,65 @@
+# Python 환경
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# 가상환경
+emotion-env/
+.venv/
+venv/
+ENV/
+env/
+
+# 민감한 설정 파일 (절대 커밋하면 안됨!)
+config/google_credentials.json
+config/firebase_service_account.json
+config/token.json
+config/*credentials*.json
+config/*_key*.json
+
+# 수집된 개인 데이터
+config/collected_data_*.json
+config/emotion_analysis_*.json
+config/complete_analysis_*.json
+config/mock_firebase_data.json
+
+# 로그 파일
+*.log
+logs/
+
+# IDE 설정
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# macOS
+.DS_Store
+
+# 환경 변수
+.env
+.env.local
+.env.production
+
+# 임시 파일
+*.tmp
+*.temp
