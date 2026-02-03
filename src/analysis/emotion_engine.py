@@ -325,5 +325,52 @@ def test_emotion_analysis():
     
     return True
 
+    def analyze_youtube_data(self, youtube_data: Dict) -> Dict:
+        """YouTube 데이터 분석 (통합 인터페이스)"""
+        return self.analyze_youtube_emotions(youtube_data)
+    
+    def analyze_calendar_data(self, calendar_data: Dict) -> Dict:
+        """Calendar 데이터 분석 (통합 인터페이스)"""
+        return self.analyze_calendar_fatigue(calendar_data)
+    
+    def get_comprehensive_analysis(self, youtube_data: Dict, calendar_data: Dict) -> Dict:
+        """YouTube와 Calendar 데이터를 종합 분석"""
+        youtube_result = self.analyze_youtube_emotions(youtube_data)
+        calendar_result = self.analyze_calendar_fatigue(calendar_data)
+        
+        # 전체 감정 점수 계산
+        youtube_score = youtube_result.get('overall_emotion_score', 0.0)
+        calendar_fatigue = calendar_result.get('fatigue_level', 0.0)
+        
+        # 종합 점수 (YouTube 감정에서 Calendar 피로도 차감)
+        overall_score = youtube_score - (calendar_fatigue * 0.5)
+        overall_score = max(-1.0, min(1.0, overall_score))  # -1 ~ 1 범위로 제한
+        
+        # 감정 상태 분류
+        if overall_score > 0.3:
+            emotion_state = "긍정적"
+            emoji = "😊"
+        elif overall_score < -0.3:
+            emotion_state = "부정적"
+            emoji = "😔"
+        else:
+            emotion_state = "중성적"
+            emoji = "😐"
+        
+        return {
+            "overall_emotion": overall_score,
+            "emotion_state": emotion_state,
+            "emoji": emoji,
+            "youtube_analysis": youtube_result,
+            "calendar_analysis": calendar_result,
+            "trend_analysis": {
+                "entertainment_level": youtube_result.get('interests', {}).get('entertainment', 0),
+                "stress_level": calendar_fatigue,
+                "work_life_balance": 1.0 - calendar_fatigue
+            },
+            "summary": f"{emoji} 전체적으로 {emotion_state} 감정 상태입니다. "
+                      f"감정 점수: {overall_score:.2f}, 피로도: {calendar_fatigue:.2f}"
+        }
+
 if __name__ == "__main__":
     test_emotion_analysis()
